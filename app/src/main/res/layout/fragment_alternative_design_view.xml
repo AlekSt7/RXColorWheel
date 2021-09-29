@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AlternativeDesignViewFragment">
+
+    <TextView
+        android:id="@+id/color_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#CCCCCC"
+        android:textSize="17dp"
+        android:layout_marginTop="28dp"
+        android:text="HEX"/>
+
+    <View
+        android:id="@+id/color_shape"
+        android:background="@drawable/cirlce"
+        android:layout_gravity="center"
+        android:layout_marginBottom="204dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+
+    <com.example.rxcolorwheel.RXColorWheel
+        android:id="@+id/AlternativeColorPicker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:colorRingRad = "0.34"
+        app:isExColorPointer = "false"
+        app:isBackground = "false"
+        app:isPointerLine = "false"
+        app:isPlacemarks = "false"
+        app:colorPointerRad = "0.27"
+        app:colorRingThickness = "0.37"
+        app:pointerRad = "0.085"
+        app:isPointerOutline = "false"
+        app:pointerCustomColor = "#F6F6F6"
+        app:colorPointerCustomColor = "#F1F1F1"
+        app:isColorPointerShadow = "false"
+        app:isPointerShadow = "true"
+        app:badge = "@drawable/ic_sharp_add_24"/>
+
+</FrameLayout>

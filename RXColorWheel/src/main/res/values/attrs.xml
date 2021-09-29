@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PreferencesColorRing">
+        <attr name="badge" format="reference" />
+        <attr name="colorPointerRad" format="float" />
+        <attr name="excPointerRad" format="float" />
+        <attr name="backgroundRad" format="float" />
+        <attr name="bgColor" format="string" />
+        <attr name="pointerRad" format="float" />
+        <attr name="colorRingRad" format="float" />
+        <attr name="colorRingThickness" format="float" />
+        <attr name="placemarksRad" format="float" />
+        <attr name="placemarksCount" format="integer" />
+        <attr name="colorPointerCustomColor" format="string" />
+        <attr name="pointerCustomColor" format="string" />
+
+        <attr name="isBackground" format="boolean" />
+        <attr name="isExColorPointer" format="boolean" />
+        <attr name="isPointerLine" format="boolean" />
+        <attr name="isPlacemarks" format="boolean" />
+        <attr name="isColorPointer" format="boolean" />
+        <attr name="isColorPointerShadow" format="boolean" />
+        <attr name="isBadge" format="boolean" />
+        <attr name="isPointerOutline" format="boolean" />
+        <attr name="isPointerShadow" format="boolean" />
+        <attr name="isShadow" format="boolean" />
+
+    </declare-styleable>
+</resources>

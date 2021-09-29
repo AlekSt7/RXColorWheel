@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MaterialViewFragment">
+
+    <TextView
+        android:id="@+id/color_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#CCCCCC"
+        android:textSize="20dp"
+        android:layout_marginTop="48dp"
+        android:text="HEX"/>
+
+    <com.example.rxcolorwheel.RXColorWheel
+        android:id="@+id/MaterialColorPicker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:isExColorPointer = "false"
+        app:colorRingRad = "0.44"
+        app:backgroundRad = "0.35"
+        app:isColorPointerShadow = "false"
+        app:bgColor = "#57FFFFFF"
+        app:isShadow = "false"
+        app:isPointerLine = "false"
+        app:isPlacemarks = "false"
+        app:colorPointerRad = "0.30"
+        app:colorRingThickness = "0.03"
+        app:isPointerShadow = "true"
+        app:pointerRad = "0.10"
+        />
+
+</FrameLayout>
