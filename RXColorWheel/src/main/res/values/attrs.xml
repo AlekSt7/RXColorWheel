@@ -15,6 +15,7 @@
         <attr name="colorPointerCustomColor" format="color" />
         <attr name="pointerCustomColor" format="color" />
 
+        <attr name="isColorPointerCustomColor" format="boolean" />
         <attr name="isPointerCustomColor" format="boolean" />
         <attr name="isBackground" format="boolean" />
         <attr name="isExColorPointer" format="boolean" />

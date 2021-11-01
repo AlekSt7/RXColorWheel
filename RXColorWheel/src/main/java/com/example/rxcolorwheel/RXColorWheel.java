@@ -158,6 +158,8 @@ public final class RXColorWheel extends View {
 
         setIsPointerCustomColor(typedArray.getBoolean(R.styleable.PreferencesColorRing_isPointerCustomColor, false));
 
+        setIsColorPointerCustomColor(typedArray.getBoolean(R.styleable.PreferencesColorRing_isColorPointerCustomColor, false));
+
         if (isPlacemarks) {stepperMode = typedArray.getBoolean(R.styleable.PreferencesColorRing_stepperMode, false);}
         else {stepperMode = false;}
 
@@ -615,7 +617,7 @@ public final class RXColorWheel extends View {
         if(isPointerCustomColor) p_pointer.setColor(getResources().getColor(R.color.pointer));
     }
 
-    public void setColorPointerRadius(float colorPointerRadius){cPointer_rad = colorPointerRadius;}
+    public void setColorPointerRadius(float colorPointerRadius){cPointer_rad = color_rad * colorPointerRadius;}
 
     public void setIsBadge(boolean isBadge){this.isBadge = isBadge;}
 
@@ -715,7 +717,7 @@ public final class RXColorWheel extends View {
 
     public float getPointerRadius(){return this.pointer_rad;}
 
-    public boolean getPointerOutline(){return this.isPointerOutline;}
+    public boolean getIsPointerOutline(){return this.isPointerOutline;}
 
     public boolean getStepperMode() {return this.stepperMode;}
 
