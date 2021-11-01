@@ -79,7 +79,7 @@ public final class RXColorWheel extends View {
     private float           angle; //The angle of the touch point relative to the center
     private float           cx, cy; //Center coordinates of view
     private float           color_rad; //Color ring radius
-    private float           color_rWidth; //Color ring thickness
+    private float color_rTh; //Color ring thickness
     private float           placemarks_rad; //Placemarks radius
     private float           cPointer_rad; //Color pointer radius
     private float           excPointer_rad; //External color pointer radius
@@ -169,12 +169,7 @@ public final class RXColorWheel extends View {
         int pColor = typedArray.getColor(R.styleable.PreferencesColorRing_pointerCustomColor, 0);
         if(pColor != 0) setPointerCustomColor(pColor);
 
-        int badge = typedArray.getResourceId(R.styleable.PreferencesColorRing_badge,-1);
-        if(badge == -1) {
-            mainImageBitmap = getBitmapFromVectorDrawable(context, R.drawable.ic_baseline_add_24);
-        }else{
-            mainImageBitmap = getBitmapFromVectorDrawable(context, badge);
-        }
+        mainImageBitmap = getBitmapFromVectorDrawable(context, typedArray.getResourceId(R.styleable.PreferencesColorRing_badge, R.drawable.ic_baseline_add_24));
 
     }
 
@@ -221,12 +216,12 @@ public final class RXColorWheel extends View {
         float background_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_backgroundRad, 1);
 
         color_rad = minVsize * color_rad_coef;
-        color_rWidth = color_rad * color_rWidth_coef;
+        color_rTh = color_rad * color_rWidth_coef;
         pointer_rad = color_rad * pointer_rad_coef;
         cPointer_rad = color_rad * cPointer_rad_coef;
         badge_size = cPointer_rad * badge_size_coef;
         excPointer_rad = color_rad * excPointer_rad_coef;
-        placemarks_rad = color_rad * placemarks_rad_coef - color_rWidth * 0.5f;
+        placemarks_rad = color_rad * placemarks_rad_coef - color_rTh * 0.5f;
         background_rad = color_rad * background_rad_coef;
         px = cx + color_rad;
         py = cy;
@@ -239,7 +234,7 @@ public final class RXColorWheel extends View {
         Shader s_color = new SweepGradient(cx, cy, color_palette, null); //Color ring shader
 
         p_color.setStyle(Paint.Style.STROKE); //Color ring
-        p_color.setStrokeWidth(color_rWidth);
+        p_color.setStrokeWidth(color_rTh);
         p_color.setShader(s_color);
 
         p_pointer.setStyle(Paint.Style.FILL); //Pointer
@@ -493,7 +488,7 @@ public final class RXColorWheel extends View {
                     else if(d < excPointer_rad && !isColorPointer && isExColorPointer){ pBL = true; }
                     else if(d < cPointer_rad && isColorPointer){ cL = true; }
 
-                    float t = color_rWidth * 0.5f + 48;
+                    float t = color_rTh * 0.5f + 48;
 
                     if(d < color_rad + t  && d > color_rad - t) {
                         move_pointer = true;
@@ -623,7 +618,7 @@ public final class RXColorWheel extends View {
 
     public void setIsRoundBadge(boolean isRoundBadge){this.isRoundBadge = isRoundBadge;}
 
-    public void setBadgeSize(float badge_size){this.badge_size = badge_size;}
+    public void setBadgeSize(float badge_size){this.badge_size = cPointer_rad * badge_size;}
 
     public void setImageBitmap(Bitmap bitmap){
         mainImageBitmap = bitmap;
@@ -637,9 +632,9 @@ public final class RXColorWheel extends View {
                 (int)cPointer_rad, false); //Set BitMap Size
     }
 
-    public void setIsExColorPointer(boolean isExColor){isExColorPointer = isExColor;}
+    public void setIsExColorPointer(boolean isExColorPointer){this.isExColorPointer = isExColorPointer;}
 
-    public void setExColoPointerRadius(float ExColorPointerRadius){this.excPointer_rad = ExColorPointerRadius;}
+    public void setExColorPointerRadius(float ExColorPointerRadius){this.excPointer_rad = color_rad * ExColorPointerRadius;}
 
     public void setBackgroundColor(int color){this.p_background.setColor(color);}
 
@@ -655,13 +650,13 @@ public final class RXColorWheel extends View {
 
     public void setPlacemarksCount(int count){this.pCount = even(count); calculate_step_angle(pCount);}
 
-    public void setColorRingRadius(float colorRingRadius){this.color_rad = colorRingRadius;}
+    public void setColorRingRadius(float colorRingRadius){this.color_rad = minVsize * colorRingRadius;}
 
-    public void setColorRingWidth(float colorRingWidth){this.color_rWidth = colorRingWidth;}
+    public void setColorRingThickness(float colorRingThickness){this.color_rTh = color_rad * colorRingThickness;}
 
     public void setIsColorPointerShadow(boolean isColorPointerShadow){this.isColorPointerShadow = isColorPointerShadow;}
 
-    public void setPointerRadius(float pointerRadius){this.pointer_rad = pointerRadius;}
+    public void setPointerRadius(float pointerRadius){this.pointer_rad = color_rad * pointerRadius;}
 
     public void setIsPointerOutline(boolean isPointerOutline){this.isPointerOutline = isPointerOutline;}
 
@@ -697,7 +692,7 @@ public final class RXColorWheel extends View {
 
     public int getBackgroundColor(){return this.p_background.getColor();}
 
-    public boolean setIsBackground(){return this.isBackground;}
+    public boolean getIsBackground(){return this.isBackground;}
 
     public boolean getIsPointerLine(){return this.isPointerLine;}
 
@@ -711,7 +706,7 @@ public final class RXColorWheel extends View {
 
     public float getColorRingRadius(){return this.color_rad;}
 
-    public float getColorRingWidth(){return this.color_rWidth;}
+    public float getColorRingThickness(){return this.color_rTh;}
 
     public boolean getIsColorPointerShadow(){return this.isColorPointerShadow;}
 
