@@ -5,25 +5,30 @@
         <attr name="colorPointerRad" format="float" />
         <attr name="excPointerRad" format="float" />
         <attr name="backgroundRad" format="float" />
-        <attr name="bgColor" format="string" />
+        <attr name="bgColor" format="color" />
         <attr name="pointerRad" format="float" />
+        <attr name="badgeSize" format="float" />
         <attr name="colorRingRad" format="float" />
         <attr name="colorRingThickness" format="float" />
         <attr name="placemarksRad" format="float" />
         <attr name="placemarksCount" format="integer" />
-        <attr name="colorPointerCustomColor" format="string" />
-        <attr name="pointerCustomColor" format="string" />
+        <attr name="colorPointerCustomColor" format="color" />
+        <attr name="pointerCustomColor" format="color" />
 
+        <attr name="isPointerCustomColor" format="boolean" />
         <attr name="isBackground" format="boolean" />
         <attr name="isExColorPointer" format="boolean" />
         <attr name="isPointerLine" format="boolean" />
         <attr name="isPlacemarks" format="boolean" />
+        <attr name="isPlacemarksRound" format="boolean" />
         <attr name="isColorPointer" format="boolean" />
         <attr name="isColorPointerShadow" format="boolean" />
         <attr name="isBadge" format="boolean" />
+        <attr name="isRoundBadge" format="boolean" />
         <attr name="isPointerOutline" format="boolean" />
         <attr name="isPointerShadow" format="boolean" />
         <attr name="isShadow" format="boolean" />
+        <attr name="stepperMode" format="boolean" />
 
     </declare-styleable>
 </resources>

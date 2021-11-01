@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DefaultViewFragment">
 
     <TextView
@@ -10,14 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textColor="#CCCCCC"
+        android:textColor="@color/color_text_accent"
         android:textSize="20dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="44dp"
         android:text="HEX"/>
 
     <com.example.rxcolorwheel.RXColorWheel
         android:id="@+id/RxColorPicker"
+        android:layout_below = "@id/color_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="450dp"
+        android:layout_marginTop="20dp" />
 
-</FrameLayout>
+</RelativeLayout>

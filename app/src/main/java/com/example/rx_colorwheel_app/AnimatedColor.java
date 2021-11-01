@@ -1,4 +1,4 @@
-package com.example.customviewtest;
+package com.example.rx_colorwheel_app;
 
 import android.graphics.Color;
 

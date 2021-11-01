@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="random_text">
+        <item>Hello</item>
+        <item>Huh?</item>
+        <item>Yeah. Just do it.</item>
+        <item>Yo</item>
+        <item>Hi</item>
+        <item>What do ya want?</item>
+        <item>Hello!</item>
+        <item>Go on senpai</item>
+        <item>Hello?</item>
+        <item>What do you want?</item>
+        <item>Click on me again senpai</item>
+        <item>Click on me again</item>
+        <item>It is RxColorWheel</item>
+        <item>You can choose different colors</item>
+        <item>We need more random phrases</item>
+        <item>It is big button, probably</item>
+    </array>
+</resources>

@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="color_text_accent">#CCCCCC</color>
+    <color name="color_text">#595959</color>
+
+    <color name="fragment_default_background">#4A474F</color>
+    <color name="fragment_material_background">#212e3c</color>
+    <color name="fragment_alternative_background">#FF141417</color>
 </resources>

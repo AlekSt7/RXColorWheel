@@ -1,4 +1,4 @@
-package com.example.customviewtest;
+package com.example.rx_colorwheel_app;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -7,15 +7,15 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rxcolorwheel.RXColorWheel;
-import com.google.android.material.button.MaterialButton;
+
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,9 +84,28 @@ public class AlternativeDesignViewFragment extends Fragment {
         RXColorWheel alternativePicker = getView().findViewById(R.id.AlternativeColorPicker);
         alternativePicker.setColorPalette(new int[]{Color.RED, Color.BLUE, Color.CYAN, Color.YELLOW});
 
-        alternativePicker.addColorChangeListener(new RXColorWheel.ColorChagneListener() {
+        alternativePicker.setButtonTouchListener(new RXColorWheel.ButtonTouchListener() {
+            @Override
+            public void on_cPointerTouch() {
+                String random_text[] = getResources().getStringArray(R.array.random_text);
+                Random random = new Random();
+                Toast toast = Toast.makeText(getContext(), random_text[random.nextInt(random_text.length)], Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void on_excPointerTouch() { }
+        });
+
+        alternativePicker.setColorChangeListener(new RXColorWheel.ColorChagneListener() {
             @Override
             public void onColorChanged(int color) {
+                bg.setColor(color);
+                color_text.setText(String.format("#%06X", (0xFFFFFF & color)));
+            }
+
+            @Override
+            public void firstDraw(int color) {
                 bg.setColor(color);
                 color_text.setText(String.format("#%06X", (0xFFFFFF & color)));
             }

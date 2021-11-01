@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="default_color_palette">
+        <item>#FF0000FF</item>
+        <item>#FF00FF00</item>
+        <item>#FFFFFF00</item>
+        <item>#FFFF0000</item>
+    </array>
+</resources>

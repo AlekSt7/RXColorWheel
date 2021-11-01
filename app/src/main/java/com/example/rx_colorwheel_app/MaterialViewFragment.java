@@ -1,4 +1,4 @@
-package com.example.customviewtest;
+package com.example.rx_colorwheel_app;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -6,23 +6,22 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rxcolorwheel.RXColorWheel;
-import com.google.android.material.button.MaterialButton;
 
-import java.io.Serializable;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DefaultViewFragment#newInstance} factory method to
+ * Use the {@link MaterialViewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DefaultViewFragment extends Fragment {
+public class MaterialViewFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,13 +32,21 @@ public class DefaultViewFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public DefaultViewFragment() {
+    public MaterialViewFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment MaterialViewFragment.
+     */
     // TODO: Rename and change types and number of parameters
-    public static DefaultViewFragment newInstance(String param1, String param2) {
-        DefaultViewFragment fragment = new DefaultViewFragment();
+    public static MaterialViewFragment newInstance(String param1, String param2) {
+        MaterialViewFragment fragment = new MaterialViewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +67,7 @@ public class DefaultViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_default_view, container, false);
+        return inflater.inflate(R.layout.fragment_material_view, container, false);
     }
 
     @Override
@@ -69,15 +76,35 @@ public class DefaultViewFragment extends Fragment {
 
         TextView color_text = getView().findViewById(R.id.color_text);
 
-        RXColorWheel defaultPicker = getView().findViewById(R.id.RxColorPicker);
+        RXColorWheel materialPicker = getView().findViewById(R.id.MaterialColorPicker);
+        materialPicker.setColorPalette(new int[]{Color.parseColor("#ef2473"), Color.CYAN, Color.parseColor("#29d8c0"), Color.YELLOW});
 
-        defaultPicker.addColorChangeListener(new RXColorWheel.ColorChagneListener() {
+        MainActivity m = new MainActivity();
+
+        materialPicker.setButtonTouchListener(new RXColorWheel.ButtonTouchListener() {
+            @Override
+            public void on_cPointerTouch() {
+                String random_text[] = getResources().getStringArray(R.array.random_text);
+                Random random = new Random();
+                Toast toast = Toast.makeText(getContext(), random_text[random.nextInt(random_text.length)], Toast.LENGTH_SHORT);
+                toast.show();
+            }
+
+            @Override
+            public void on_excPointerTouch() { }
+        });
+
+        materialPicker.setColorChangeListener(new RXColorWheel.ColorChagneListener() {
             @Override
             public void onColorChanged(int color) {
                 color_text.setText(String.format("#%06X", (0xFFFFFF & color)));
             }
+
+            @Override
+            public void firstDraw(int color) { color_text.setText(String.format("#%06X", (0xFFFFFF & color))); }
         });
 
-    }
+        //materialPicker.setImageById(getContext(), R.drawable.icon);
 
+    }
 }

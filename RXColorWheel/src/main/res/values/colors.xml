@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#2C2A31</color>
+    <color name="color_pointer">#FFFFFFFF</color>
+    <color name="pointer_line">#FFFFFFFF</color>
+    <color name="pointer">#F6F6F6</color>
+    <color name="pointer_outline">#FFFFFFFF</color>
+</resources>
