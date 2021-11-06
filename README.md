@@ -1,6 +1,18 @@
 # RXColorWheel
 RXColorWheel library - it is a fully customizable colorpicker element created based on the defauld android `View`.
 
+## Download
+
+Gradle:
+
+    repositories {
+            maven { url "https://jitpack.io" }
+        }
+    
+    dependencies {
+        implementation 'com.github.alekst7:rxcolorwheel:LATEST_RELEASE (for example v1.0.1)'
+    }
+    
 ## Usage
 
 There is example of basic usage here:
