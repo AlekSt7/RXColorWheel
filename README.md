@@ -1,6 +1,8 @@
 # RXColorWheel
 RXColorWheel library - it is a fully customizable colorpicker element created based on the defauld android `View`.
 
+You can customize your color wheel via XML attributes (learn more in the wiki of project).
+
 ## Download
 
 Gradle:
@@ -43,3 +45,6 @@ colorPicker.setColorChangeListener(new RXColorWheel.ColorChagneListener() {
         });
 
 ```
+
+## License
+MIT
