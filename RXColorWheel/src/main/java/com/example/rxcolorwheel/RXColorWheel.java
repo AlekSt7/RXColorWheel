@@ -389,7 +389,7 @@ public final class RXColorWheel extends View {
         if(firstDraw) {
             firstDraw = false;
             if(stepperMode) calculate_step_angle(pCount);
-            colorChagneListener.firstDraw(color);
+            if(colorChagneListener != null) colorChagneListener.firstDraw(color);
         }
         else if(!firstDraw){
             if(isPointerLine) {c.drawLine(cx,cy,(float) px,(float) py, p_pLine);} //Pointer line
