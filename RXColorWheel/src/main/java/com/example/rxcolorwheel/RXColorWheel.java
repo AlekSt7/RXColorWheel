@@ -79,7 +79,7 @@ public final class RXColorWheel extends View {
     private float           angle; //The angle of the touch point relative to the center
     private float           cx, cy; //Center coordinates of view
     private float           color_rad; //Color ring radius
-    private float color_rTh; //Color ring thickness
+    private float           color_rTh; //Color ring thickness
     private float           placemarks_rad; //Placemarks radius
     private float           cPointer_rad; //Color pointer radius
     private float           excPointer_rad; //External color pointer radius
@@ -425,13 +425,8 @@ public final class RXColorWheel extends View {
      * @param args Array of values to compare
      */
     static float nearest(float n, float...args) {
-        //тут мы храним значение ближайшего числа
         float nearest = 0;
-        //очевидно же, что максимальное значение типа int - это одновременно максимальная удаленность двух чисел
-        //Умножаем на два и приводим к типу long, так как в Java нет беззнаковых типов
         float value = 2*Float.MAX_VALUE;
-        //дальше просто проходим по массиву и сравниваем разницу
-        //сравнение по модулю, т.е. чем меньше разница - тем ближе числа
         if(args != null){
             for(float arg : args){
                 if (value > Math.abs(n - arg)){
