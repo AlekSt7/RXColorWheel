@@ -1,7 +1,9 @@
 # RXColorWheel
-RXColorWheel library - it is a fully customizable colorpicker element created based on the defauld android `View`.
+RXColorWheel library - it is a fully customizable colorpicker element created based on the defauld android `View`.![RXColorWheel App Logo](https://user-images.githubusercontent.com/56515163/140645612-a2746023-54d8-454f-9988-9dc1e5cd7b60.png)
 
 You can customize your color wheel via XML attributes (learn more in the wiki of project).
+
+<img src="https://user-images.githubusercontent.com/56515163/140645285-93adfb17-0554-48a6-8f2b-012c17573e96.png" height="250" />
 
 ## Download
 
