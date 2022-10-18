@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PreferencesColorRing">
+    <declare-styleable name="RXColorWheel">
         <attr name="badge" format="reference" />
         <attr name="colorPointerRad" format="float" />
         <attr name="excPointerRad" format="float" />

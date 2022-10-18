@@ -1,5 +1,6 @@
 package com.example.rxcolorwheel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -42,7 +43,7 @@ public final class RXColorWheel extends View {
          *
          * @param color The current color.
          */
-        void firstDraw(int color);
+            void firstDraw(int color);
     }
 
     /** Interface definition for a callback which to be invoked when the buttons are pressed. */
@@ -76,7 +77,6 @@ public final class RXColorWheel extends View {
 
     private double          py, px; //Pointer coordinates
 
-    private float           angle; //The angle of the touch point relative to the center
     private float           cx, cy; //Center coordinates of view
     private float           color_rad; //Color ring radius
     private float           color_rTh; //Color ring thickness
@@ -86,9 +86,10 @@ public final class RXColorWheel extends View {
     private float           pointer_rad; //Pointer radius
     private float           background_rad; //Background radius
     private float           badge_size; //Badge image size
-    private float           degrees[];
+    private float[]         degrees; //An array that stores the angle values for the location of the labels
+    private final float[] hsv = new float[] {0, 1f, 1f};
 
-    private int             color_palette[];
+    private int[]           color_palette;
     private int             color; //The currently selected color
     private int             minVsize; //Minimal view size (by width or height)
     private int             pCount; //Number of decorative placemarks
@@ -124,52 +125,52 @@ public final class RXColorWheel extends View {
 
         setColorPalette(getResources().getIntArray(R.array.default_color_palette));
 
-        typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.PreferencesColorRing);
+        typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.RXColorWheel);
 
-        isBackground = typedArray.getBoolean(R.styleable.PreferencesColorRing_isBackground,true);
+        isBackground = typedArray.getBoolean(R.styleable.RXColorWheel_isBackground,true);
 
-        isExColorPointer = typedArray.getBoolean(R.styleable.PreferencesColorRing_isExColorPointer,true);
+        isExColorPointer = typedArray.getBoolean(R.styleable.RXColorWheel_isExColorPointer,true);
 
-        isPointerLine = typedArray.getBoolean(R.styleable.PreferencesColorRing_isPointerLine,true);
+        isPointerLine = typedArray.getBoolean(R.styleable.RXColorWheel_isPointerLine,true);
 
-        isPlacemarks = typedArray.getBoolean(R.styleable.PreferencesColorRing_isPlacemarks,true);
+        isPlacemarks = typedArray.getBoolean(R.styleable.RXColorWheel_isPlacemarks,true);
 
-        isPlacemarksRound = typedArray.getBoolean(R.styleable.PreferencesColorRing_isPlacemarksRound,true);
+        isPlacemarksRound = typedArray.getBoolean(R.styleable.RXColorWheel_isPlacemarksRound,true);
 
-        isColorPointer = typedArray.getBoolean(R.styleable.PreferencesColorRing_isColorPointer,true);
+        isColorPointer = typedArray.getBoolean(R.styleable.RXColorWheel_isColorPointer,true);
 
-        isColorPointerShadow = typedArray.getBoolean(R.styleable.PreferencesColorRing_isColorPointerShadow, true);
+        isColorPointerShadow = typedArray.getBoolean(R.styleable.RXColorWheel_isColorPointerShadow, true);
 
-        isBadge = typedArray.getBoolean(R.styleable.PreferencesColorRing_isBadge, true);
+        isBadge = typedArray.getBoolean(R.styleable.RXColorWheel_isBadge, true);
 
-        isRoundBadge = typedArray.getBoolean(R.styleable.PreferencesColorRing_isRoundBadge, false);
+        isRoundBadge = typedArray.getBoolean(R.styleable.RXColorWheel_isRoundBadge, false);
 
-        isPointerOutline = typedArray.getBoolean(R.styleable.PreferencesColorRing_isPointerOutline, true);
+        isPointerOutline = typedArray.getBoolean(R.styleable.RXColorWheel_isPointerOutline, true);
 
-        isPointerShadow = typedArray.getBoolean(R.styleable.PreferencesColorRing_isPointerShadow, false);
+        isPointerShadow = typedArray.getBoolean(R.styleable.RXColorWheel_isPointerShadow, false);
 
-        pCount = even(typedArray.getInt(R.styleable.PreferencesColorRing_placemarksCount,20));
+        pCount = even(typedArray.getInt(R.styleable.RXColorWheel_placemarksCount,20));
         if(stepperMode) calculate_step_angle(pCount);
 
-        p_background.setColor(typedArray.getColor(R.styleable.PreferencesColorRing_bgColor,
+        p_background.setColor(typedArray.getColor(R.styleable.RXColorWheel_bgColor,
                 getResources().getColor(R.color.background)));
 
-        isShadow = typedArray.getBoolean(R.styleable.PreferencesColorRing_isShadow, true);
+        isShadow = typedArray.getBoolean(R.styleable.RXColorWheel_isShadow, true);
 
-        setIsPointerCustomColor(typedArray.getBoolean(R.styleable.PreferencesColorRing_isPointerCustomColor, false));
+        setIsPointerCustomColor(typedArray.getBoolean(R.styleable.RXColorWheel_isPointerCustomColor, false));
 
-        setIsColorPointerCustomColor(typedArray.getBoolean(R.styleable.PreferencesColorRing_isColorPointerCustomColor, false));
+        setIsColorPointerCustomColor(typedArray.getBoolean(R.styleable.RXColorWheel_isColorPointerCustomColor, false));
 
-        if (isPlacemarks) {stepperMode = typedArray.getBoolean(R.styleable.PreferencesColorRing_stepperMode, false);}
+        if (isPlacemarks) {stepperMode = typedArray.getBoolean(R.styleable.RXColorWheel_stepperMode, false);}
         else {stepperMode = false;}
 
-        int cp_color = typedArray.getColor(R.styleable.PreferencesColorRing_colorPointerCustomColor, 0);
+        int cp_color = typedArray.getColor(R.styleable.RXColorWheel_colorPointerCustomColor, 0);
         if(cp_color != 0) setColorPointerCustomColor(cp_color);
 
-        int pColor = typedArray.getColor(R.styleable.PreferencesColorRing_pointerCustomColor, 0);
+        int pColor = typedArray.getColor(R.styleable.RXColorWheel_pointerCustomColor, 0);
         if(pColor != 0) setPointerCustomColor(pColor);
 
-        mainImageBitmap = getBitmapFromVectorDrawable(context, typedArray.getResourceId(R.styleable.PreferencesColorRing_badge, R.drawable.ic_baseline_add_24));
+        mainImageBitmap = getBitmapFromVectorDrawable(context, typedArray.getResourceId(R.styleable.RXColorWheel_badge, R.drawable.ic_baseline_add_24));
 
     }
 
@@ -179,9 +180,6 @@ public final class RXColorWheel extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int mWidth = decodeMeasureSpec(widthMeasureSpec);
         int mHeight = decodeMeasureSpec(heightMeasureSpec);
-
-        //int mWidth = MeasureSpec.getSize(widthMeasureSpec);
-        //int mHeight = MeasureSpec.getSize(heightMeasureSpec);
 
         minVsize = Math.min(mWidth, mHeight);
         setMeasuredDimension(mWidth, mHeight);
@@ -196,9 +194,9 @@ public final class RXColorWheel extends View {
 
     private int decodeMeasureSpec(int measureSpec) {
         int result;
-        int specMoge = MeasureSpec.getMode(measureSpec);
+        int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
-        if (specMoge == MeasureSpec.UNSPECIFIED) result = 350;
+        if (specMode == MeasureSpec.UNSPECIFIED) result = 350;
         else result = specSize;
         return result;
     }
@@ -206,14 +204,14 @@ public final class RXColorWheel extends View {
     /** Calculates the dimensions of the elements inside the View */
     private void calculateSizes() {
 
-        float color_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_colorRingRad, 0.41f);
-        float color_rWidth_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_colorRingThickness, 0.04f);
-        float pointer_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_pointerRad, 0.12f);
-        float cPointer_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_colorPointerRad, 0.17f);
-        float badge_size_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_badgeSize, 1);
-        float excPointer_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_excPointerRad, 0.6f);
-        float placemarks_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_placemarksRad, 0.96f);
-        float background_rad_coef = typedArray.getFloat(R.styleable.PreferencesColorRing_backgroundRad, 1);
+        float color_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_colorRingRad, 0.41f);
+        float color_rWidth_coef = typedArray.getFloat(R.styleable.RXColorWheel_colorRingThickness, 0.04f);
+        float pointer_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_pointerRad, 0.12f);
+        float cPointer_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_colorPointerRad, 0.17f);
+        float badge_size_coef = typedArray.getFloat(R.styleable.RXColorWheel_badgeSize, 1);
+        float excPointer_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_excPointerRad, 0.6f);
+        float placemarks_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_placemarksRad, 0.96f);
+        float background_rad_coef = typedArray.getFloat(R.styleable.RXColorWheel_backgroundRad, 1);
 
         color_rad = minVsize * color_rad_coef;
         color_rTh = color_rad * color_rWidth_coef;
@@ -274,14 +272,14 @@ public final class RXColorWheel extends View {
     private void calculate_step_angle(int line_count){
 
         float angle = 0;
-        float degree = (float) Math.toRadians(360 / line_count);
+        float degree = (float) Math.toRadians(360f / line_count);
 
         degrees = new float[line_count + 1];
 
         int half = line_count/2;
         degrees[0] = 0;
 
-        float array[] = new float[half];
+        float[] array = new float[half];
 
         for(int i = 1; i < half+1; i++) {
                 angle = angle + degree;
@@ -310,20 +308,17 @@ public final class RXColorWheel extends View {
         double r2y;
 
         float angle = 0;
-        float degree = (float) Math.toRadians(360 / line_count);
+        float degree = (float) Math.toRadians(360f / line_count);
 
         for(int i = 0; i < line_count; i++) {
 
             angle = angle + degree;
 
-            //r1x = r1 * Math.cos(angle) + cx;
-            //r1y = r1 * Math.sin(angle) + cy;
+            r1x = r * Math.cos(angle) + cx;
+            r1y = r * Math.sin(angle) + cy;
 
-            r1x = (r * Math.cos(angle) - 0 * Math.sin(angle)) + cx;
-            r1y = (r * Math.sin(angle) + 0 * Math.cos(angle)) + cy;
-
-            r2x = r1x + Math.cos(angle) * r2;
-            r2y = r1y + Math.sin(angle) * r2;
+            r2x = r2 * Math.cos(angle) + r1x;
+            r2y = r2 * Math.sin(angle) + r1y;
 
             c.drawLine((float) r1x, (float) r1y, (float) r2x, (float) r2y, p_placemarks);
         }
@@ -355,7 +350,7 @@ public final class RXColorWheel extends View {
 
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2, bitmap.getWidth() / 2, paint);
+        canvas.drawCircle(bitmap.getWidth() * 0.5f, bitmap.getHeight() * 0.5f, bitmap.getWidth() * 0.5f, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
@@ -376,8 +371,6 @@ public final class RXColorWheel extends View {
         if(!isColorPointerCustomColor) {p_cPointer.setColor(pixel);}
         if(!isPointerCustomColor) {p_pointer.setColor(pixel);}
 
-        float[] hsv = new float[] {0, 1f, 1f};
-
         Color.colorToHSV(pixel, hsv);
 
         hsv[2] = hsv[2] * 0.90f;
@@ -391,7 +384,7 @@ public final class RXColorWheel extends View {
             if(stepperMode) calculate_step_angle(pCount);
             if(colorChagneListener != null) colorChagneListener.firstDraw(color);
         }
-        else if(!firstDraw){
+        else {
             if(isPointerLine) {c.drawLine(cx,cy,(float) px,(float) py, p_pLine);} //Pointer line
             if(isColorPointer) { //Color pointer
                 c.drawCircle(cx, cy, cPointer_rad, p_cPointer);
@@ -441,17 +434,16 @@ public final class RXColorWheel extends View {
     boolean move_pointer = false;
     float angle_old = 0;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
 
         float x = event.getX() - cx;
         float y = event.getY() - cy;
 
-        float s = cx - color_rad;
-
         float nearest;
 
-        angle = (float) Math.atan2(y,x); //Find the angle relative to the center and the touch point
+        float angle = (float) Math.atan2(y, x); //Find the angle relative to the center and the touch point
         double d = Math.sqrt(x*x + y*y); //Calculating the distance from the touch point to the center
 
         if(stepperMode) nearest = nearest(angle, degrees); else nearest = 0;
@@ -494,8 +486,8 @@ public final class RXColorWheel extends View {
                                 if (stepperListener != null) stepperListener.onStep();
                             }
                         }
-                            px = (cx - s) * Math.cos(angle) + cx;
-                            py = (cx - s) * Math.sin(angle) + cy;
+                        px = color_rad * Math.cos(angle) + cx;
+                        py = color_rad * Math.sin(angle) + cy;
 
                         if(colorChagneListener != null) colorChagneListener.onColorChanged(color);
 
@@ -507,16 +499,18 @@ public final class RXColorWheel extends View {
 
                     if (move_pointer) {
                         if(stepperMode){
-                                angle = nearest;
+                            angle = nearest;
                             if(Math.abs(nearest_old) != Math.abs(nearest)) {
                                 nearest_old = nearest;
                                 if (stepperListener != null) stepperListener.onStep();
                             }
                         }
-                            px = (cx - s) * Math.cos(angle) + cx;
-                            py = (cx - s) * Math.sin(angle) + cy;
 
-                            if(colorChagneListener != null) colorChagneListener.onColorChanged(color);
+                        px = color_rad * Math.cos(angle) + cx;
+                        py = color_rad * Math.sin(angle) + cy;
+
+                        if(colorChagneListener != null) colorChagneListener.onColorChanged(color);
+
                     }
 
                 break;
@@ -539,19 +533,17 @@ public final class RXColorWheel extends View {
         return cc;
     }
 
-    /** ---------Public user set methods--------- */
+    /* ---------Public user set methods--------- */
 
     /** Sets user color on color wheel */
     public boolean setColor(int color){
-
-        float s = cx - color_rad;
-        double x = cx + color_rad;
-        double y = cy;
+        double x;
+        double y;
 
         for(float p = 0; p <= 6.2831f; p=p+0.0001f){
 
-            x = (cx - s) * Math.cos(p) + cx;
-            y = (cx - s) * Math.sin(p) + cy;
+            x = color_rad * Math.cos(p) + cx;
+            y = color_rad * Math.sin(p) + cy;
 
             if(color == getDrawingCache().getPixel((int) x,(int) y)){
                 px = x;
@@ -576,7 +568,7 @@ public final class RXColorWheel extends View {
      *
      * @param colors Accepts an array of color indexes
      */
-    public void setColorPalette(int colors[]){
+    public void setColorPalette(@NonNull int[] colors){
         if(colors[0] != colors[colors.length - 1]){
             colors = Arrays.copyOf(colors, colors.length + 1); //Create new array from old array and allocate one more element
             colors[colors.length - 1] = colors[0];
