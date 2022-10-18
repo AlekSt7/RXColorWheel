@@ -453,7 +453,7 @@ public final class RXColorWheel extends View {
         float angle = (float) Math.atan2(y, x); //Find the angle relative to the center and the touch point
         double d = Math.sqrt(x*x + y*y); //Calculating the distance from the touch point to the center
 
-        if(stepperMode) nearest = nearest(angle, degrees); else nearest = 0;
+        nearest = stepperMode ? nearest(angle, degrees) : 0;
 
             switch (event.getAction()) {
 
