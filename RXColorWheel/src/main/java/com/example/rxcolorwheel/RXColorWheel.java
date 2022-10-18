@@ -430,8 +430,15 @@ public final class RXColorWheel extends View {
     }
 
     float nearest_old = 0;
-    boolean exPBL = false, pBL = false, cL = false;
-    boolean move_pointer = false;
+
+    private enum Unit{
+        VOID,
+        EX_CP, //External color pointer
+        CP, //Color pointer
+        P //Pointer
+    }
+
+    Unit unit = Unit.VOID;
     float angle_old = 0;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -452,33 +459,29 @@ public final class RXColorWheel extends View {
 
                 case MotionEvent.ACTION_UP:
 
-                    move_pointer = false;
+                    switch (unit){
+                        case EX_CP:
+                            if(buttonTouchListener != null) buttonTouchListener.on_excPointerTouch();
+                            break;
+                        case CP:
+                            if(buttonTouchListener != null) buttonTouchListener.on_cPointerTouch();
+                            break;
+                    }
 
-                    if(exPBL){
-                        if(buttonTouchListener != null) buttonTouchListener.on_excPointerTouch();
-                        exPBL = false;
-                    }
-                    else if(pBL){
-                        if(buttonTouchListener != null) buttonTouchListener.on_excPointerTouch();
-                        pBL = false;
-                    }
-                    else if(cL){
-                        if(buttonTouchListener != null) buttonTouchListener.on_cPointerTouch();
-                        cL = false;
-                    }
+                    unit = Unit.VOID;
 
                 break;
 
                 case MotionEvent.ACTION_DOWN:
 
-                    if(d < excPointer_rad && d > cPointer_rad && isExColorPointer){ exPBL = true; }
-                    else if(d < excPointer_rad && !isColorPointer && isExColorPointer){ pBL = true; }
-                    else if(d < cPointer_rad && isColorPointer){ cL = true; }
+                    if(d < excPointer_rad && d > cPointer_rad && isExColorPointer){ unit = Unit.EX_CP; }
+                    else if(d < excPointer_rad && !isColorPointer && isExColorPointer){ unit = Unit.EX_CP; }
+                    else if(d < cPointer_rad && isColorPointer){ unit = Unit.CP; }
 
                     float t = color_rTh * 0.5f + 48;
 
                     if(d < color_rad + t  && d > color_rad - t) {
-                        move_pointer = true;
+                        unit = Unit.P;
                         if(stepperMode) {
                             angle = nearest;
                             if(Math.abs(nearest_old) != Math.abs(nearest)) {
@@ -497,7 +500,7 @@ public final class RXColorWheel extends View {
 
                 case MotionEvent.ACTION_MOVE:
 
-                    if (move_pointer) {
+                    if (unit.equals(Unit.P)) {
                         if(stepperMode){
                             angle = nearest;
                             if(Math.abs(nearest_old) != Math.abs(nearest)) {
