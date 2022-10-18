@@ -150,7 +150,7 @@ public final class RXColorWheel extends View {
         isPointerShadow = typedArray.getBoolean(R.styleable.RXColorWheel_isPointerShadow, false);
 
         pCount = even(typedArray.getInt(R.styleable.RXColorWheel_placemarksCount,20));
-        if(stepperMode) calculate_step_angle(pCount);
+        if(stepperMode) calculateStepAngle(pCount);
 
         p_background.setColor(typedArray.getColor(R.styleable.RXColorWheel_bgColor,
                 getResources().getColor(R.color.background)));
@@ -269,7 +269,7 @@ public final class RXColorWheel extends View {
     }
 
     /** Calculates the angle to which the pointer should move in stepper mode */
-    private void calculate_step_angle(int line_count){
+    private void calculateStepAngle(int line_count){
 
         float angle = 0;
         float degree = (float) Math.toRadians(360f / line_count);
@@ -381,7 +381,7 @@ public final class RXColorWheel extends View {
 
         if(firstDraw) {
             firstDraw = false;
-            if(stepperMode) calculate_step_angle(pCount);
+            if(stepperMode) calculateStepAngle(pCount);
             if(colorChagneListener != null) colorChagneListener.firstDraw(color);
         }
         else {
@@ -638,7 +638,7 @@ public final class RXColorWheel extends View {
 
     public void setIsPlacemarksRound(boolean isPlacemarksRound){this.isPlacemarksRound = isPlacemarksRound;}
 
-    public void setPlacemarksCount(int count){this.pCount = even(count); calculate_step_angle(pCount);}
+    public void setPlacemarksCount(int count){this.pCount = even(count); calculateStepAngle(pCount);}
 
     public void setColorRingRadius(float colorRingRadius){this.color_rad = minVsize * colorRingRadius;}
 
@@ -650,7 +650,7 @@ public final class RXColorWheel extends View {
 
     public void setIsPointerOutline(boolean isPointerOutline){this.isPointerOutline = isPointerOutline;}
 
-    public void setStepperMode(boolean stepperMode){if(isPlacemarks) this.stepperMode = stepperMode; if(this.stepperMode) calculate_step_angle(pCount);}
+    public void setStepperMode(boolean stepperMode){if(isPlacemarks) this.stepperMode = stepperMode; if(this.stepperMode) calculateStepAngle(pCount);}
 
     /** ---------Public user get methods--------- */
 
