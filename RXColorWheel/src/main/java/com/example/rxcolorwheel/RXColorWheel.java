@@ -29,9 +29,9 @@ public final class RXColorWheel extends View {
 
 
     /** Interface definition for a callback which to be invoked when the color changes. */
-    public interface ColorChagneListener{
-
+    public interface ColorChangeListener{
         /**
+         *
          * Called when the color changes.
          *
          * @param color The current color.
@@ -62,7 +62,7 @@ public final class RXColorWheel extends View {
 
     }
 
-    private ColorChagneListener colorChagneListener;
+    private ColorChangeListener colorChangeListener;
     private ButtonTouchListener buttonTouchListener;
     private StepperListener     stepperListener;
 
@@ -361,17 +361,15 @@ public final class RXColorWheel extends View {
     protected void onDraw(Canvas c) {
         super.onDraw(c);
 
-        if(isBackground) {c.drawCircle(cx, cy, background_rad, p_background);} //Background
+        if(isBackground) c.drawCircle(cx, cy, background_rad, p_background); //Background
         c.drawCircle(cx, cy, color_rad, p_color); //Color ring
 
-        int pixel = getDrawingCache().getPixel((int) px,(int) py);
+        color = getDrawingCache().getPixel((int) px,(int) py);
 
-        color = pixel;
+        if(!isColorPointerCustomColor) p_cPointer.setColor(color);
+        if(!isPointerCustomColor) p_pointer.setColor(color);
 
-        if(!isColorPointerCustomColor) {p_cPointer.setColor(pixel);}
-        if(!isPointerCustomColor) {p_pointer.setColor(pixel);}
-
-        Color.colorToHSV(pixel, hsv);
+        Color.colorToHSV(color, hsv);
 
         hsv[2] = hsv[2] * 0.90f;
 
@@ -382,7 +380,7 @@ public final class RXColorWheel extends View {
         if(firstDraw) {
             firstDraw = false;
             if(stepperMode) calculateStepAngle(pCount);
-            if(colorChagneListener != null) colorChagneListener.firstDraw(color);
+            if(colorChangeListener != null) colorChangeListener.firstDraw(color);
         }
         else {
             if(isPointerLine) {c.drawLine(cx,cy,(float) px,(float) py, p_pLine);} //Pointer line
@@ -492,7 +490,7 @@ public final class RXColorWheel extends View {
                         px = color_rad * Math.cos(angle) + cx;
                         py = color_rad * Math.sin(angle) + cy;
 
-                        if(colorChagneListener != null) colorChagneListener.onColorChanged(color);
+                        if(colorChangeListener != null) colorChangeListener.onColorChanged(color);
 
                     }
 
@@ -512,7 +510,7 @@ public final class RXColorWheel extends View {
                         px = color_rad * Math.cos(angle) + cx;
                         py = color_rad * Math.sin(angle) + cy;
 
-                        if(colorChagneListener != null) colorChagneListener.onColorChanged(color);
+                        if(colorChangeListener != null) colorChangeListener.onColorChanged(color);
 
                     }
 
@@ -561,7 +559,8 @@ public final class RXColorWheel extends View {
 
     public void setButtonTouchListener(@NonNull ButtonTouchListener listener){ buttonTouchListener = listener;}
 
-    public void setColorChangeListener(@NonNull ColorChagneListener listener){colorChagneListener = listener;}
+    public void setColorChangeListener(@NonNull ColorChangeListener listener){
+        colorChangeListener = listener;}
 
     public void setStepperListener(@NonNull StepperListener listener){ stepperListener = listener;}
 
