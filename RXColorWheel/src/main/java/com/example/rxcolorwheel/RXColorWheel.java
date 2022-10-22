@@ -528,10 +528,7 @@ public final class RXColorWheel extends View {
 
     /** Returns always an even number */
     private int even(int c){
-        int cc;
-        if(c % 2 == 0) { cc = c; }
-        else{ cc = c + 1; }
-        return cc;
+        return (c + 1) & (~1);
     }
 
     /* ---------Public user set methods--------- */
