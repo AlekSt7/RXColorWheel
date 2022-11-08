@@ -3,6 +3,8 @@ RXColorWheel library - it is a fully customizable colorpicker element created ba
 
 <img src="https://user-images.githubusercontent.com/56515163/140645285-93adfb17-0554-48a6-8f2b-012c17573e96.png" height="350" width="528" />
 
+Article about how it works (in Russian) - https://habr.com/ru/post/694852/
+
 ## Download
 
 Gradle:
